@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -19,13 +20,10 @@ public class SecteurActivite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idSecteurActivite;
-    private String codeSecteurActivite;
-    private String libelleSecteurActivite;
-
-    @ManyToMany(mappedBy = "secteurActivites")
-    @JsonIgnore
-    private List<Fournisseur> fournisseurs;
-
+    public Long idSecteurActivite;
+    public String codeSecteurActivite;
+    public String libelleSecteurActivite;
+    @ManyToMany
+    public Set<Fournisseur> fournisseurs;
 
 }

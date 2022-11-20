@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -19,12 +20,10 @@ public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private long idStock;
+    private Long idStock;
     private int qte;
     private int qteMin;
     private String libelleStock;
-
-    @OneToMany(mappedBy="stock")
-    private List<Produit> produits ;
+    @OneToMany(mappedBy = "stock")
+    private Set<Produit> produits;
 }

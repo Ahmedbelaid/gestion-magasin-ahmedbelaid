@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -18,25 +19,17 @@ import java.util.List;
 public class Fournisseur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private long idFournisseur;
-    private String codeFournisseur;
-    private String libelleFournisseur;
-
-
-    @Enumerated(EnumType.STRING)
-    private CategorieFournisseur categorieFournisseur;
-
-    @ManyToMany
-    private List<SecteurActivite> secteurActivites;
-
-    @OneToMany(mappedBy="fournisseur")
-    private List<Facture> factures ;
-
-    @OneToOne private Fournisseur fournisseur;
-
+    public Long idFournisseur;
+    public String codeFournisseur;
+    public String libelleFournisseur;
+    @Enumerated(EnumType.ORDINAL)
+    public CategorieFournisseur categorieFournisseur;
+    @OneToMany(mappedBy = "fournisseur")
+    public Set<Facture> facture;
+    @ManyToMany(mappedBy = "fournisseurs")
+    public Set<SecteurActivite> secteurActivite;
     @OneToOne(mappedBy = "fournisseur")
-    private DetailFournisseur detailFournisseur;
+    public DetailFournisseur detailFournisseur;
 }
 
 

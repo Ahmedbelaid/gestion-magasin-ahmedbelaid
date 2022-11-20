@@ -1,5 +1,6 @@
 package com.test.tpgestionmagasinstock.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,20 +19,21 @@ import java.util.List;
 
 public class Facture {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long idFacture;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idFacture;
     private float montantRemise;
     private float montantFacture;
-    private Date dateCreationFacture;
+    @Temporal(TemporalType.DATE)
+    private Date dateCreationFacture ;
+    @Temporal(TemporalType.DATE)
     private Date dateDerniereModification;
-    private boolean achrivee;
-
-    @OneToMany(mappedBy="fact")
-    private List<DetailFacture> detailFactures ;
-
-    @OneToMany(mappedBy="fact")
-    private List<Reglement> reglements ;
-    @ManyToOne
-    private  Fournisseur fournisseur ;
+    private boolean archivee;
+    @OneToMany(mappedBy = "facture")
+    private Set<Reglement> reglements;
+    @OneToMany(mappedBy = "facture")
+    private Set<DetailFacture> detailfacture;
+    @ManyToOne(cascade =CascadeType.PERSIST)
+    @JsonIgnore
+    private Fournisseur fournisseur;
 
 }

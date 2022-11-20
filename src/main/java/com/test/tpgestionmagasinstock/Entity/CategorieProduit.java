@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,10 +18,9 @@ import java.util.List;
 public class CategorieProduit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCategorieProduit;
-    private String codeProduit;
-    private String libelleCategorieProduit;
-
-    @OneToMany (mappedBy="categorieProduit")
-    private List<Produit> produits ;
+    public Long idCategorieProduit;
+    public String codeProduit;
+    public String libelleCategorieProduit;
+    @OneToMany(mappedBy = "categorieProduit")
+    public Set<Produit> produits;
 }

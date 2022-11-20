@@ -1,5 +1,6 @@
 package com.test.tpgestionmagasinstock.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,14 @@ import java.util.Date;
 public class Reglement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idReglement;
+    private Long idReglement;
     private float montantPaye;
-    private float montantRestant;
+    private float MontantRestant;
     private boolean payee;
-    private Date dateReglement;
+    @Temporal(TemporalType.DATE)
+    private Date Date;
 
-    @ManyToOne
-    private  Facture fact ;
+    @ManyToOne(cascade =CascadeType.PERSIST)
+    @JsonIgnore
+    private Facture facture;
 }

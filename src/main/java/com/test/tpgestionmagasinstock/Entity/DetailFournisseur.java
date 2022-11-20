@@ -19,14 +19,13 @@ import java.util.List;
 public class DetailFournisseur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long IdDetailFournisseur ;
-    private Date dateDebutCollaboration;
-    private String adresse;
-    private String matricule;
-    @ManyToOne
-    private Facture facture;
+    public Long idDetailFournisseur;
+    @Temporal(TemporalType.DATE)
+    public Date dateDebutCollaboration;
+    public String adresse;
+    public String matricule;
     @OneToOne
-    private Fournisseur fournisseur;
+    public Fournisseur fournisseur;
 
 
 }

@@ -1,7 +1,9 @@
 package com.test.tpgestionmagasinstock.Controllers;
 
 import com.test.tpgestionmagasinstock.Entity.Produit;
+import com.test.tpgestionmagasinstock.Services.IProduitServiceImp;
 import com.test.tpgestionmagasinstock.Services.ProduitService;
+import com.test.tpgestionmagasinstock.generic.ControllerGeneric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,34 +13,29 @@ import java.util.List;
 @RestController
 @RequestMapping("produits")
 
-public class ProduitController {
-
+public class ProduitController extends ControllerGeneric<Produit,Long> {
     @Autowired
-    ProduitService produitService;
+    private IProduitServiceImp service;
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    public String UpdateProduit(@RequestBody Produit p, @PathVariable Long id) {
+        try {
+            Produit updateProduit= service.retrieve(id);
+            if (updateProduit==null){
+                return "Produit not found with id :";
+            }
+            updateProduit.setCategorieProduit(p.getCategorieProduit());
+            updateProduit.setCodeProduit(p.getCodeProduit());
+            updateProduit.setLibelleProduit(p.getLibelleProduit());
+            updateProduit.setPrix(p.getPrix());
+            updateProduit.setDetailFacture(p.getDetailFacture());
+            updateProduit.setStock(p.getStock());
+            updateProduit.setDateCreation(p.getDateCreation());
+            updateProduit.setDateDerniereModification(p.getDateDerniereModification());
+            service.update(updateProduit);
 
-
-    @Autowired
-    @GetMapping
-    public List<Produit> displayProduits() { return produitService.getAllProduit();}
-
-    @PostMapping
-    public Produit addProduit (@RequestBody Produit produit) {
-        return produitService.addProduit(produit);
-    }
-
-    @PutMapping("{id}")
-    public Produit updateProduit (@PathVariable("idProduit") long idProduit, @RequestBody Produit produit) {
-        return produitService.updateProduit( idProduit, produit);
-    }
-
-    @DeleteMapping("{id}")
-    public String deleteProduit(@PathVariable("id") long idProduit) {
-        return produitService.deleteProduit(produitService.getById(idProduit));
-
-    }
-    @GetMapping("{id}")
-    public Produit getById(@PathVariable("id")long idProduit){
-        return produitService.getById(idProduit);
-
+        } catch (Exception err) {
+            throw new RuntimeException(err);
+        }
+        return "Produit modifié";
     }
 }
